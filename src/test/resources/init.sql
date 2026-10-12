@@ -1,0 +1,13 @@
+CREATE TABLE policies (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    policy_id VARCHAR(50)  NOT NULL UNIQUE,
+    meter_id VARCHAR(50) NOT NULL,
+    anomaly_type VARCHAR(100) NOT NULL,
+    severity VARCHAR(50) NOT NULL,
+    channels VARCHAR[] NOT NULL,
+    email_recipients VARCHAR[],
+    sms_recipients VARCHAR[],
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
