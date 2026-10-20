@@ -9,5 +9,8 @@ CREATE TABLE policies (
     sms_recipients VARCHAR[],
     enabled BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT policies_meter_anomaly_severity_unique
+        UNIQUE (meter_id, anomaly_type, severity)
 );

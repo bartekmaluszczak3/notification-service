@@ -2,6 +2,7 @@ package org.example.notification.service;
 
 import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.dto.PolicyRequest;
+import org.example.notification.exception.DatabaseException;
 import org.example.notification.exception.PolicyNotFoundException;
 import org.example.notification.repository.PolicyRepository;
 import org.example.notification.shared.IntegrationBase;
@@ -20,7 +21,7 @@ public class GetPolicyServiceTest extends IntegrationBase {
     private PolicyRepository policyRepository;
 
     @Test
-    void shouldGetPolicyById() throws PolicyNotFoundException {
+    void shouldGetPolicyById() throws PolicyNotFoundException, DatabaseException {
         // given
         policyRepository.save(samplePolicy(),
                 "policy-id");

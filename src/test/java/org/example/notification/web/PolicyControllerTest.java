@@ -1,5 +1,6 @@
 package org.example.notification.web;
 
+import lombok.SneakyThrows;
 import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
@@ -49,6 +50,7 @@ public class PolicyControllerTest extends IntegrationBase {
         Assertions.assertEquals(1, policies.size());
     }
 
+    @SneakyThrows
     @Test
     void shouldGetPolicy() {
         // given

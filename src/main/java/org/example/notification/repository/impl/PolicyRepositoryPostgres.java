@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
+import org.example.notification.exception.DatabaseException;
 import org.example.notification.repository.value.PolicyQueries;
 import org.example.notification.repository.PolicyRepository;
 import org.example.notification.repository.mapper.PolicyRowMapper;
@@ -27,7 +28,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
         this.policyRowMapper = new PolicyRowMapper();
     }
     @Override
-    public Policy save(PolicyRequest request, String policyId) {
+    public Policy save(PolicyRequest request, String policyId) throws DatabaseException {
         log.info("Trying to save policy in the databse");
         try {
             return jdbcTemplate.query(
@@ -64,7 +65,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
                     ));
         } catch (Exception e) {
             log.error("Failed to save policy: {}", policyId, e);
-            throw new RuntimeException("Failed to save policy", e);
+            throw new DatabaseException("Failed to save policy");
         } finally {
             log.info("Policy saved");
         }
