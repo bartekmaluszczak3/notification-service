@@ -1,6 +1,9 @@
 package org.example.notification.shared;
 
 import org.example.notification.Application;
+import org.example.notification.domain.ChannelType;
+import org.example.notification.domain.dto.PolicyRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -29,6 +33,11 @@ public abstract class IntegrationBase {
                     .withInitScript("init.sql");
     static {
         postgres.start();
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        clear();
     }
 
     @DynamicPropertySource
@@ -64,5 +73,15 @@ public abstract class IntegrationBase {
         );
     }
 
+    public PolicyRequest samplePolicy() {
+        return PolicyRequest.builder()
+
+                .meterId("meter-id")
+                .anomalyType("OVERVOLTAGE")
+                .severity("CRITICAL")
+                .channelTypes(Set.of(ChannelType.DATABASE))
+                .enabled(true)
+                .build();
+    }
 
 }

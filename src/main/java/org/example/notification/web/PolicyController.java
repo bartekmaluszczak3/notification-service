@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.notification.domain.dto.PolicyRequest;
 import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.exception.PolicyNotFoundException;
 import org.example.notification.service.PolicyService;
 import org.example.notification.web.mapper.ResponseMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/notifications/policies")
@@ -26,6 +24,13 @@ public class PolicyController {
         log.debug("Anomaly type = {} channels {} meterId {} severity {}", policyRequest.getAnomalyType(),
                 policyRequest.getChannelTypes(), policyRequest.getMeterId(), policyRequest.getSeverity());
         var policy = policyService.save(policyRequest);
+        return ResponseEntity.ok(responseMapper.toResponse(policy));
+    }
+
+    @GetMapping("{policyId}")
+    public ResponseEntity<PolicyResponse> getPolicyById(@PathVariable String policyId) throws PolicyNotFoundException {
+        log.info("Received get policy request");
+        var policy = policyService.getPolicy(policyId);
         return ResponseEntity.ok(responseMapper.toResponse(policy));
     }
 }

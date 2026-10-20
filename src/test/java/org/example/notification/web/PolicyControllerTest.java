@@ -1,8 +1,10 @@
 package org.example.notification.web;
 
 import org.example.notification.domain.ChannelType;
+import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
 import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.service.PolicyService;
 import org.example.notification.shared.IntegrationBase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,9 @@ public class PolicyControllerTest extends IntegrationBase {
 
     @Autowired
     TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private PolicyService policyService;
 
     @BeforeEach
     void beforeEach() {
@@ -42,6 +47,19 @@ public class PolicyControllerTest extends IntegrationBase {
         Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
         var policies = getAllPolicies();
         Assertions.assertEquals(1, policies.size());
+    }
+
+    @Test
+    void shouldGetPolicy() {
+        // given
+        Policy policy = policyService.save(samplePolicy());
+
+        // when
+        var response = testRestTemplate.getForEntity("/api/v1/notifications/policies/" + policy.getPolicyId(), PolicyResponse.class);
+
+        // then
+        Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
 
     }
+
 }

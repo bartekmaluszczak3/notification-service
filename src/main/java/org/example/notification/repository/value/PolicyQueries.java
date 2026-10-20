@@ -1,4 +1,4 @@
-package org.example.notification.domain.value;
+package org.example.notification.repository.value;
 
 public final class PolicyQueries {
     public static final String INSERT_SQL = """
@@ -7,5 +7,9 @@ public final class PolicyQueries {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             RETURNING *
             """;
-
+    public static final String FIND_BY_ID = """
+            SELECT * 
+            FROM policies 
+            WHERE policy_id = ?
+            """;
 }

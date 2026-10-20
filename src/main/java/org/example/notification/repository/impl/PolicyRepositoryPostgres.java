@@ -5,21 +5,27 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
-import org.example.notification.domain.value.PolicyQueries;
+import org.example.notification.repository.value.PolicyQueries;
 import org.example.notification.repository.PolicyRepository;
 import org.example.notification.repository.mapper.PolicyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
 @Repository
-@AllArgsConstructor
 public class PolicyRepositoryPostgres implements PolicyRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final PolicyRowMapper policyRowMapper;
 
+    PolicyRepositoryPostgres (JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+        this.policyRowMapper = new PolicyRowMapper();
+    }
     @Override
     public Policy save(PolicyRequest request, String policyId) {
         log.info("Trying to save policy in the databse");
@@ -50,7 +56,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
 
                                 return ps;
                             },
-                            new PolicyRowMapper()
+                            policyRowMapper
                     ).stream()
                     .findFirst()
                     .orElseThrow(() -> new IllegalStateException(
@@ -63,5 +69,17 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
             log.info("Policy saved");
         }
 
+    }
+
+    @Override
+    public Optional<Policy> getByPolicyId(String policyId) {
+        log.info("Searching for policy with id = {}", policyId);
+        List<Policy> policies = jdbcTemplate.query(
+                PolicyQueries.FIND_BY_ID,
+                policyRowMapper,
+                policyId
+        );
+        
+        return policies.stream().findFirst();
     }
 }
