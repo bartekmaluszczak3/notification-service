@@ -1,16 +1,18 @@
-package org.example.notification.domain;
+package org.example.notification.domain.policy.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.example.notification.domain.policy.ChannelType;
 
-import java.time.OffsetDateTime;
 import java.util.Set;
-@NoArgsConstructor
+
 @Getter
-@Setter
-public class Policy {
-    private Long id;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PolicyResponse {
     private String policyId;
     private String meterId;
     private Set<ChannelType> channelTypes;
@@ -19,6 +21,5 @@ public class Policy {
     private String anomalyType;
     private String severity;
     private boolean enabled;
-    private OffsetDateTime createdAt;
-    private OffsetDateTime modifiedAt;
+
 }

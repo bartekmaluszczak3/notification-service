@@ -1,10 +1,10 @@
-package org.example.notification.domain.dto;
+package org.example.notification.domain.policy.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.notification.domain.ChannelType;
+import org.example.notification.domain.policy.ChannelType;
 
 import java.util.Collections;
 import java.util.Set;

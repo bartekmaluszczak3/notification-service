@@ -1,17 +1,15 @@
-package org.example.notification.service;
+package org.example.notification.service.policy;
 
 import lombok.SneakyThrows;
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.dto.UpdatePolicyRequest;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.dto.UpdatePolicyRequest;
 import org.example.notification.exception.DatabaseException;
-import org.example.notification.exception.PolicyNotFoundException;
-import org.example.notification.repository.PolicyRepository;
+import org.example.notification.repository.policy.PolicyRepository;
 import org.example.notification.shared.IntegrationBase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.Set;
 

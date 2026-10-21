@@ -1,15 +1,14 @@
-package org.example.notification.repository.impl;
+package org.example.notification.repository.policy.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.Policy;
-import org.example.notification.domain.dto.PolicyRequest;
-import org.example.notification.domain.dto.UpdatePolicyRequest;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.Policy;
+import org.example.notification.domain.policy.dto.PolicyRequest;
+import org.example.notification.domain.policy.dto.UpdatePolicyRequest;
 import org.example.notification.exception.DatabaseException;
-import org.example.notification.repository.value.PolicyQueries;
-import org.example.notification.repository.PolicyRepository;
-import org.example.notification.repository.mapper.PolicyRowMapper;
+import org.example.notification.repository.policy.value.PolicyQueries;
+import org.example.notification.repository.policy.PolicyRepository;
+import org.example.notification.repository.policy.mapper.PolicyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +30,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
 
     @Override
     public Policy save(PolicyRequest request, String policyId) throws DatabaseException {
-        log.info("Trying to save policy in the databse");
+        log.info("Trying to save policy in the database");
         try {
             return jdbcTemplate.query(
                             connection -> {
@@ -126,5 +125,24 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
         } finally {
             log.info("Policy updated");
         }
+    }
+
+    @Override
+    public Policy findPolicy(String meterId, String anomalyType, String severity) {
+        log.info("Trying to find policy in the database");
+        return jdbcTemplate.query(
+                        connection -> {
+                            PreparedStatement ps = connection.prepareStatement(PolicyQueries.FIND_SQL);
+                            ps.setObject(1, meterId);
+                            ps.setObject(2,anomalyType );
+                            ps.setObject(3, severity);
+                            return ps;
+                        },
+                        policyRowMapper
+                ).stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(
+                        "Find did not return  policy"
+                ));
     }
 }

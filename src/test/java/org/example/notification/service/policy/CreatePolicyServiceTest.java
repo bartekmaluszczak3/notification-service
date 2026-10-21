@@ -1,10 +1,11 @@
-package org.example.notification.service;
+package org.example.notification.service.policy;
 
 import lombok.SneakyThrows;
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.Policy;
-import org.example.notification.domain.dto.PolicyRequest;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.Policy;
+import org.example.notification.domain.policy.dto.PolicyRequest;
 import org.example.notification.exception.DatabaseException;
+import org.example.notification.service.policy.PolicyService;
 import org.example.notification.shared.IntegrationBase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

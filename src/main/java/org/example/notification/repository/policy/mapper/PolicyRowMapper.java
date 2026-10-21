@@ -1,7 +1,7 @@
-package org.example.notification.repository.mapper;
+package org.example.notification.repository.policy.mapper;
 
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.Policy;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.Policy;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Array;

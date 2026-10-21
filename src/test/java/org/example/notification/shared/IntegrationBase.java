@@ -1,8 +1,8 @@
 package org.example.notification.shared;
 
 import org.example.notification.Application;
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.dto.PolicyRequest;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.dto.PolicyRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -79,7 +79,7 @@ public abstract class IntegrationBase {
                 .meterId("meter-id")
                 .anomalyType("OVERVOLTAGE")
                 .severity("CRITICAL")
-                .channelTypes(Set.of(ChannelType.DATABASE))
+                .channelTypes(Set.of(ChannelType.DATABASE, ChannelType.SMS))
                 .enabled(true)
                 .build();
     }

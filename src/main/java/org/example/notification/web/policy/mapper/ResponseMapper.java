@@ -1,7 +1,7 @@
-package org.example.notification.web.mapper;
+package org.example.notification.web.policy.mapper;
 
-import org.example.notification.domain.Policy;
-import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.domain.policy.Policy;
+import org.example.notification.domain.policy.dto.PolicyResponse;
 import org.springframework.stereotype.Component;
 
 @Component

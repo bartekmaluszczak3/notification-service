@@ -1,8 +1,9 @@
 package org.example.notification.web.mapper;
 
-import org.example.notification.domain.ChannelType;
-import org.example.notification.domain.Policy;
-import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.domain.policy.ChannelType;
+import org.example.notification.domain.policy.Policy;
+import org.example.notification.domain.policy.dto.PolicyResponse;
+import org.example.notification.web.policy.mapper.ResponseMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
