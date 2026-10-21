@@ -5,6 +5,8 @@ import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
 import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.domain.dto.UpdatePolicyRequest;
+import org.example.notification.exception.DatabaseException;
 import org.example.notification.service.PolicyService;
 import org.example.notification.shared.IntegrationBase;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
@@ -61,7 +66,30 @@ public class PolicyControllerTest extends IntegrationBase {
 
         // then
         Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
+    }
 
+    @Test
+    void shouldUpdatePolicy() throws DatabaseException {
+        // given
+        Policy policy = policyService.save(samplePolicy());
+        UpdatePolicyRequest updatePolicyRequest = UpdatePolicyRequest.builder()
+                .channelTypes(Set.of(ChannelType.SMS, ChannelType.DATABASE))
+                .emailRecipients(Set.of("testmail@example.com"))
+                .smsRecipients(Set.of("123456789"))
+                .enabled(false)
+                .build();
+
+
+        // when
+        ResponseEntity<PolicyResponse> response = testRestTemplate.exchange(
+                "/api/v1/notifications/policies/{policyId}",
+                HttpMethod.PUT,
+                new HttpEntity<>(updatePolicyRequest),
+                PolicyResponse.class,
+                policy.getPolicyId()
+        );
+        // then
+        Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
     }
 
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.notification.domain.dto.PolicyRequest;
 import org.example.notification.domain.dto.PolicyResponse;
+import org.example.notification.domain.dto.UpdatePolicyRequest;
 import org.example.notification.exception.DatabaseException;
 import org.example.notification.exception.PolicyNotFoundException;
 import org.example.notification.service.PolicyService;
@@ -33,5 +34,12 @@ public class PolicyController {
         log.info("Received get policy request");
         var policy = policyService.getPolicy(policyId);
         return ResponseEntity.ok(responseMapper.toResponse(policy));
+    }
+
+    @PutMapping("{policyId}")
+    public ResponseEntity<PolicyResponse> update(@PathVariable String policyId, @RequestBody UpdatePolicyRequest updatePolicyRequest) throws DatabaseException {
+        log.info("Received update policy request");
+        var updatedPolicy = policyService.update(policyId, updatePolicyRequest);
+        return ResponseEntity.ok(responseMapper.toResponse(updatedPolicy));
     }
 }

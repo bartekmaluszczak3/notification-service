@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.notification.domain.ChannelType;
 import org.example.notification.domain.Policy;
 import org.example.notification.domain.dto.PolicyRequest;
+import org.example.notification.domain.dto.UpdatePolicyRequest;
 import org.example.notification.exception.DatabaseException;
 import org.example.notification.repository.value.PolicyQueries;
 import org.example.notification.repository.PolicyRepository;
@@ -23,10 +24,11 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
     private final JdbcTemplate jdbcTemplate;
     private final PolicyRowMapper policyRowMapper;
 
-    PolicyRepositoryPostgres (JdbcTemplate jdbcTemplate){
+    PolicyRepositoryPostgres(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.policyRowMapper = new PolicyRowMapper();
     }
+
     @Override
     public Policy save(PolicyRequest request, String policyId) throws DatabaseException {
         log.info("Trying to save policy in the databse");
@@ -80,7 +82,49 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
                 policyRowMapper,
                 policyId
         );
-        
+
         return policies.stream().findFirst();
+    }
+
+    @Override
+    public Policy update(String policyId, UpdatePolicyRequest request) throws DatabaseException {
+        log.info("Trying to update policy in the databse");
+        try {
+            return jdbcTemplate.query(
+                            connection -> {
+                                PreparedStatement ps = connection.prepareStatement(PolicyQueries.UPDATE_SQL);
+
+                                String[] emails = request.getEmailRecipients() != null
+                                        ? request.getEmailRecipients().toArray(new String[0])
+                                        : new String[0];
+
+                                String[] channels = request.getChannelTypes().stream()
+                                        .map(ChannelType::name)
+                                        .toArray(String[]::new);
+
+                                String[] sms = request.getSmsRecipients() != null
+                                        ? request.getSmsRecipients().toArray(new String[0])
+                                        : new String[0];
+
+                                ps.setObject(1, channels);
+                                ps.setObject(2, emails);
+                                ps.setObject(3, sms);
+                                ps.setBoolean(4, request.isEnabled());
+                                ps.setObject(5, policyId);
+
+                                return ps;
+                            },
+                            policyRowMapper
+                    ).stream()
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalStateException(
+                            "UPDATE did not return the saved policy"
+                    ));
+        } catch (Exception e) {
+            log.error("Failed to update policy: {}", policyId, e);
+            throw new DatabaseException("Failed to save policy");
+        } finally {
+            log.info("Policy updated");
+        }
     }
 }

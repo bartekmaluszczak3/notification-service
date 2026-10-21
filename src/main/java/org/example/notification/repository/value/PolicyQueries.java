@@ -12,4 +12,16 @@ public final class PolicyQueries {
             FROM policies 
             WHERE policy_id = ?
             """;
+
+    public static final String UPDATE_SQL = """
+        UPDATE policies
+        SET
+            channels = ?,
+            email_recipients = ?,
+            sms_recipients = ?,
+            enabled = ?,
+            modified_at = CURRENT_TIMESTAMP
+        WHERE policy_id = ?
+        RETURNING *
+        """;
 }
