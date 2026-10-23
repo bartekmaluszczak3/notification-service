@@ -64,7 +64,10 @@ public abstract class IntegrationBase {
     protected JdbcTemplate jdbcTemplate;
 
     protected void clear() {
-        jdbcTemplate.update("DELETE FROM policies;");
+        jdbcTemplate.update("""
+            DELETE FROM policies;
+            DELETE FROM notification_events;
+        """);
     }
 
     protected List<Map<String, Object>> getAllPolicies() {
@@ -75,7 +78,6 @@ public abstract class IntegrationBase {
 
     public PolicyRequest samplePolicy() {
         return PolicyRequest.builder()
-
                 .meterId("meter-id")
                 .anomalyType("OVERVOLTAGE")
                 .severity("CRITICAL")

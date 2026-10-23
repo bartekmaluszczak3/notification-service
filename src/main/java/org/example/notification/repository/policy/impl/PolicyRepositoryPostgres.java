@@ -11,6 +11,7 @@ import org.example.notification.repository.policy.PolicyRepository;
 import org.example.notification.repository.policy.mapper.PolicyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
     }
 
     @Override
+    @Transactional
     public Policy save(PolicyRequest request, String policyId) throws DatabaseException {
         log.info("Trying to save policy in the database");
         try {
@@ -74,6 +76,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
     }
 
     @Override
+    @Transactional
     public Optional<Policy> getByPolicyId(String policyId) {
         log.info("Searching for policy with id = {}", policyId);
         List<Policy> policies = jdbcTemplate.query(
@@ -86,6 +89,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
     }
 
     @Override
+    @Transactional
     public Policy update(String policyId, UpdatePolicyRequest request) throws DatabaseException {
         log.info("Trying to update policy in the databse");
         try {
@@ -128,6 +132,7 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
     }
 
     @Override
+    @Transactional
     public Policy findPolicy(String meterId, String anomalyType, String severity) {
         log.info("Trying to find policy in the database");
         return jdbcTemplate.query(
