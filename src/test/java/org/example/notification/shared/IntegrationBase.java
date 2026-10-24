@@ -75,6 +75,12 @@ public abstract class IntegrationBase {
                 "SELECT * FROM policies"
         );
     }
+    protected List<Map<String, Object>> getAllNotificationEvent() {
+        return jdbcTemplate.queryForList(
+                "SELECT * FROM notification_events"
+        );
+    }
+
 
     public PolicyRequest samplePolicy() {
         return PolicyRequest.builder()
