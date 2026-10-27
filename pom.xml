@@ -16,6 +16,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <lombok.version>1.18.38</lombok.version>
+        <twilo.version>13.0.0</twilo.version>
     </properties>
     <dependencies>
         <dependency>
@@ -55,6 +56,11 @@
             <artifactId>postgresql</artifactId>
             <version>1.18.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>${twilo.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

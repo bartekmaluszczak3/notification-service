@@ -15,3 +15,8 @@ spring:
           auth: false
           starttls:
             enable: false
+service:
+  twilio:
+    account-sid: AC00000000000000000000000000000000
+    auth-token: vtest-auth-token
+    from-number: +15005550006
