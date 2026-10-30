@@ -1,8 +1,8 @@
-package org.example.notification.service.policy.sms.impl;
+package org.example.notification.service.notification.sms.impl;
 
 import com.twilio.type.PhoneNumber;
 import org.example.notification.config.TwilioConfig;
-import org.example.notification.service.policy.sms.SmsService;
+import org.example.notification.service.notification.sms.SmsService;
 import org.springframework.stereotype.Component;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.Message;

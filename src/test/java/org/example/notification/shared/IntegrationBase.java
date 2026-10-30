@@ -66,6 +66,7 @@ public abstract class IntegrationBase {
     protected void clear() {
         jdbcTemplate.update("""
             DELETE FROM policies;
+            DELETE FROM notification_delivery_log;
             DELETE FROM notification_events;
         """);
     }
@@ -78,6 +79,12 @@ public abstract class IntegrationBase {
     protected List<Map<String, Object>> getAllNotificationEvent() {
         return jdbcTemplate.queryForList(
                 "SELECT * FROM notification_events"
+        );
+    }
+
+    protected List<Map<String, Object>> getNotificationByDeliveryId(String deliveryId) {
+        return jdbcTemplate.queryForList(
+                "SELECT * FROM notification_delivery_log WHERE delivery_id ='" + deliveryId + "';"
         );
     }
 

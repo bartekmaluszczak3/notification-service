@@ -6,7 +6,7 @@ import org.example.notification.domain.notification.DeliveryResult;
 import org.example.notification.domain.notification.Notification;
 import org.example.notification.domain.policy.ChannelType;
 import org.example.notification.domain.policy.Policy;
-import org.example.notification.service.policy.sms.SmsService;
+import org.example.notification.service.notification.sms.SmsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

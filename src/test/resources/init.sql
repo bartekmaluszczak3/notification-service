@@ -28,3 +28,18 @@ CREATE TABLE IF NOT EXISTS notification_events (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     processed_at TIMESTAMPTZ
 );
+
+
+create TABLE IF NOT EXISTS notification_delivery_log (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    delivery_id VARCHAR(50) NOT NULL UNIQUE,
+    notification_id VARCHAR(50)  NOT NULL REFERENCES notification_events(notification_id),
+    channel VARCHAR(20)  NOT NULL CHECK (channel IN ('DATABASE', 'EMAIL', 'SMS')),
+    recipient VARCHAR(255) NOT NULL,
+    status VARCHAR(20)  NOT NULL CHECK (status IN ('PENDING', 'SUCCESS', 'FAILED', 'SKIPPED')),
+    error_message TEXT,
+    retry_count int NOT NULL DEFAULT 0,
+    sent_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ  NOT NULL DEFAULT now()
+)

@@ -3,7 +3,7 @@ package org.example.notification.channel;
 import org.example.notification.channel.impl.SmsNotificationChannel;
 import org.example.notification.domain.notification.Notification;
 import org.example.notification.domain.policy.Policy;
-import org.example.notification.service.policy.sms.SmsService;
+import org.example.notification.service.notification.sms.SmsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
