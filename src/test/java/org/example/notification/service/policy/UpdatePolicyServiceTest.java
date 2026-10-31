@@ -28,7 +28,7 @@ public class UpdatePolicyServiceTest extends IntegrationBase {
         policyRepository.save(samplePolicy(),
                 "policy-id");
         UpdatePolicyRequest updatePolicyRequest = UpdatePolicyRequest.builder()
-                .channelTypes(Set.of(ChannelType.SMS, ChannelType.DATABASE))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .emailRecipients(Set.of("testmail@example.com"))
                 .smsRecipients(Set.of("123456789"))
                 .enabled(false)
@@ -40,7 +40,7 @@ public class UpdatePolicyServiceTest extends IntegrationBase {
         // then
         Assertions.assertEquals(Set.of("123456789"), policy.getSmsRecipients());
         Assertions.assertEquals(Set.of("testmail@example.com"), policy.getEmailRecipients());
-        Assertions.assertEquals(Set.of(ChannelType.SMS, ChannelType.DATABASE), policy.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS), policy.getChannelTypes());
         Assertions.assertFalse(policy.isEnabled());
         Assertions.assertTrue(now.isBefore(policy.getModifiedAt()));
     }
@@ -50,7 +50,7 @@ public class UpdatePolicyServiceTest extends IntegrationBase {
     void shouldNotUpdateWhenPolicyNotExist() {
         // given
         UpdatePolicyRequest updatePolicyRequest = UpdatePolicyRequest.builder()
-                .channelTypes(Set.of(ChannelType.SMS, ChannelType.DATABASE))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .emailRecipients(Set.of("testmail@example.com"))
                 .smsRecipients(Set.of("123456789"))
                 .enabled(false)

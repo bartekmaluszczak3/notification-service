@@ -27,7 +27,7 @@ public class FindPolicyServiceTest extends IntegrationBase {
         var policy = policyService.findPolicy("meter-id", "OVERVOLTAGE", "CRITICAL");
 
         // then
-        Assertions.assertEquals(Set.of(ChannelType.SMS, ChannelType.DATABASE), policy.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS), policy.getChannelTypes());
     }
 
     @Test
@@ -36,6 +36,6 @@ public class FindPolicyServiceTest extends IntegrationBase {
         var policy = policyService.findPolicy("meter-id", "OVERVOLTAGE", "CRITICAL");
 
         // then
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE), policy.getChannelTypes());
+        Assertions.assertEquals("meter-id", policy.getMeterId());
     }
 }

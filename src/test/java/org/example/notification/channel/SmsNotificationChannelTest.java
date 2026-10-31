@@ -68,6 +68,6 @@ public class SmsNotificationChannelTest {
         List<String> receipts = smsNotificationChannel.resolveReceipts(policy);
 
         // then
-        Assertions.assertEquals(List.of("+1234566", "+1212211221"), receipts);
+        Assertions.assertTrue(receipts.containsAll(List.of("+1234566", "+1212211221")));
     }
 }

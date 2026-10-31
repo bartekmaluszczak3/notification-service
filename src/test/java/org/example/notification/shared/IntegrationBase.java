@@ -94,7 +94,7 @@ public abstract class IntegrationBase {
                 .meterId("meter-id")
                 .anomalyType("OVERVOLTAGE")
                 .severity("CRITICAL")
-                .channelTypes(Set.of(ChannelType.DATABASE, ChannelType.SMS))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .enabled(true)
                 .build();
     }

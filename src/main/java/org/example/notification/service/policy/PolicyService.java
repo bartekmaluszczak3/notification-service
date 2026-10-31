@@ -42,7 +42,6 @@ public class PolicyService {
             var policy = new Policy();
             policy.setEnabled(true);
             policy.setMeterId(meterId);
-            policy.setChannelTypes(Set.of(ChannelType.DATABASE));
             return policy;
         }
     }

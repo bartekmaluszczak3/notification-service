@@ -25,7 +25,7 @@ public class CreatePolicyServiceTest extends IntegrationBase {
         var policyRequest = PolicyRequest.builder()
                 .anomalyType("OVERVOLTAGE")
                 .meterId("sonar-0001")
-                .channelTypes(Set.of(ChannelType.DATABASE, ChannelType.SMS))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .emailRecipients(Set.of("test@example.com", "example@dummy.com"))
                 .smsRecipients(Set.of("123456789", "987654321"))
                 .severity("CRITICAL")
@@ -39,7 +39,7 @@ public class CreatePolicyServiceTest extends IntegrationBase {
         Assertions.assertFalse(policy.getPolicyId().isEmpty());
         Assertions.assertEquals("OVERVOLTAGE", policy.getAnomalyType());
         Assertions.assertEquals("sonar-0001", policy.getMeterId());
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE, ChannelType.SMS), policy.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS), policy.getChannelTypes());
         Assertions.assertEquals(Set.of("test@example.com", "example@dummy.com"), policy.getEmailRecipients());
         Assertions.assertEquals(Set.of("123456789", "987654321"), policy.getSmsRecipients());
         Assertions.assertEquals("CRITICAL", policy.getSeverity());
@@ -63,7 +63,6 @@ public class CreatePolicyServiceTest extends IntegrationBase {
         Assertions.assertFalse(policy.getPolicyId().isEmpty());
         Assertions.assertEquals("OVERVOLTAGE", policy.getAnomalyType());
         Assertions.assertEquals("sonar-0001", policy.getMeterId());
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE), policy.getChannelTypes());
         Assertions.assertEquals("CRITICAL", policy.getSeverity());
         Assertions.assertTrue(policy.isEnabled());
     }

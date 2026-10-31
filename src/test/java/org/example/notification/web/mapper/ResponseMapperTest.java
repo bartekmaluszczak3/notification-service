@@ -19,7 +19,7 @@ public class ResponseMapperTest {
         Policy policy = new Policy();
         policy.setPolicyId("policy-id");
         policy.setMeterId("meter-id");
-        policy.setChannelTypes(Set.of(ChannelType.DATABASE, ChannelType.SMS, ChannelType.EMAIL));
+        policy.setChannelTypes(Set.of(ChannelType.SMS, ChannelType.EMAIL));
         policy.setEmailRecipients(Set.of("testmail@example.com"));
         policy.setSmsRecipients(Set.of("123456789"));
         policy.setAnomalyType("OVERLOAD");
@@ -32,7 +32,7 @@ public class ResponseMapperTest {
         // then
         Assertions.assertEquals("policy-id", policyResponse.getPolicyId());
         Assertions.assertEquals("meter-id", policyResponse.getMeterId());
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE, ChannelType.SMS, ChannelType.EMAIL), policyResponse.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS, ChannelType.EMAIL), policyResponse.getChannelTypes());
         Assertions.assertEquals(Set.of("testmail@example.com"), policyResponse.getEmailRecipients());
         Assertions.assertEquals(Set.of("123456789"), policyResponse.getSmsRecipients());
         Assertions.assertEquals("OVERLOAD", policyResponse.getAnomalyType());

@@ -39,7 +39,7 @@ public class PolicyControllerTest extends IntegrationBase {
         var policyRequest = PolicyRequest.builder()
                 .anomalyType("OVERVOLTAGE")
                 .meterId("sonar-0001")
-                .channelTypes(Set.of(ChannelType.DATABASE, ChannelType.SMS))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .emailRecipients(Set.of("test@example.com", "example@dummy.com"))
                 .smsRecipients(Set.of("123456789", "987654321"))
                 .severity("CRITICAL")
@@ -73,7 +73,7 @@ public class PolicyControllerTest extends IntegrationBase {
         // given
         Policy policy = policyService.save(samplePolicy());
         UpdatePolicyRequest updatePolicyRequest = UpdatePolicyRequest.builder()
-                .channelTypes(Set.of(ChannelType.SMS, ChannelType.DATABASE))
+                .channelTypes(Set.of(ChannelType.SMS))
                 .emailRecipients(Set.of("testmail@example.com"))
                 .smsRecipients(Set.of("123456789"))
                 .enabled(false)
@@ -105,7 +105,7 @@ public class PolicyControllerTest extends IntegrationBase {
         // then
         Assertions.assertTrue(response.getStatusCode().is2xxSuccessful());
         var body = response.getBody();
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE, ChannelType.SMS), body.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS), body.getChannelTypes());
     }
 
 

@@ -32,7 +32,7 @@ public class GetPolicyServiceTest extends IntegrationBase {
         Assertions.assertEquals("meter-id", policy.getMeterId());
         Assertions.assertEquals("OVERVOLTAGE", policy.getAnomalyType());
         Assertions.assertEquals("CRITICAL", policy.getSeverity());
-        Assertions.assertEquals(Set.of(ChannelType.DATABASE, ChannelType.SMS), policy.getChannelTypes());
+        Assertions.assertEquals(Set.of(ChannelType.SMS), policy.getChannelTypes());
         Assertions.assertTrue(policy.isEnabled());
     }
 

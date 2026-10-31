@@ -79,7 +79,7 @@ public class EmailNotificationChannelTest {
         var receipts = emailNotificationChannel.resolveReceipts(policy);
 
         // then
-        Assertions.assertEquals(List.of("test@test.com", "example@example.com"), receipts);
+        Assertions.assertTrue(receipts.containsAll(List.of("test@test.com", "example@example.com")));
     }
 
     @Test

@@ -16,7 +16,7 @@ import java.util.Set;
 public class PolicyRequest {
     private String meterId;
     @Builder.Default
-    private Set<ChannelType> channelTypes = Set.of(ChannelType.DATABASE);
+    private Set<ChannelType> channelTypes = Set.of();
     @Builder.Default
     private Set<String> emailRecipients = Collections.emptySet();
     @Builder.Default
