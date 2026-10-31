@@ -31,8 +31,8 @@ public class EmailNotificationChannel implements NotificationChannel {
     }
 
     @Override
-    public List<String> resolveReceipts(Policy policy) {
-        return policy.getEmailRecipients().stream().toList();
+    public List<String> resolveReceipts(Notification notification) {
+        return notification.getEmailRecipients().stream().toList();
     }
 
     @Override

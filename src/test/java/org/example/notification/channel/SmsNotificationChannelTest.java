@@ -61,11 +61,12 @@ public class SmsNotificationChannelTest {
     @Test
     void shouldResolveRecipient() {
         // given
-        Policy policy = new Policy();
-        policy.setSmsRecipients(Set.of("+1234566", "+1212211221"));
+        Notification notification = Notification.builder()
+                .smsRecipients(Set.of("+1234566", "+1212211221"))
+                .build();
 
         // when
-        List<String> receipts = smsNotificationChannel.resolveReceipts(policy);
+        List<String> receipts = smsNotificationChannel.resolveReceipts(notification);
 
         // then
         Assertions.assertTrue(receipts.containsAll(List.of("+1234566", "+1212211221")));
