@@ -72,8 +72,9 @@ public class EmailNotificationChannelTest {
     @Test
     void shouldResolveReceipts() {
         // given
-        Policy policy = new Policy();
-        policy.setEmailRecipients(Set.of("test@test.com", "example@example.com"));
+        Notification policy = Notification.builder()
+                .emailRecipients(Set.of("test@test.com", "example@example.com"))
+                .build();
 
         // when
         var receipts = emailNotificationChannel.resolveReceipts(policy);

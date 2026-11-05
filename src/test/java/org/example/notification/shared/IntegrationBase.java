@@ -88,6 +88,11 @@ public abstract class IntegrationBase {
         );
     }
 
+    protected List<Map<String, Object>> getAllNotificationDeliveryLog() {
+        return jdbcTemplate.queryForList(
+                "SELECT * FROM notification_delivery_log;"
+        );
+    }
 
     public PolicyRequest samplePolicy() {
         return PolicyRequest.builder()

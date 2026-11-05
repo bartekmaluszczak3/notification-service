@@ -22,8 +22,8 @@ public class SmsNotificationChannel implements NotificationChannel {
     }
 
     @Override
-    public List<String> resolveReceipts(Policy policy) {
-        return policy.getSmsRecipients().stream().toList();
+    public List<String> resolveReceipts(Notification notification) {
+        return notification.getSmsRecipients().stream().toList();
     }
 
     @Override
