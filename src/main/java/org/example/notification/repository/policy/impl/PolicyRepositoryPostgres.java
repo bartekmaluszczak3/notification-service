@@ -130,24 +130,25 @@ public class PolicyRepositoryPostgres implements PolicyRepository {
             log.info("Policy updated");
         }
     }
-
     @Override
-    @Transactional
-    public Policy findPolicy(String meterId, String anomalyType, String severity) {
+    public Optional<Policy> findPolicy(
+            String meterId,
+            String anomalyType,
+            String severity
+    ) {
         log.info("Trying to find policy in the database");
+
         return jdbcTemplate.query(
-                        connection -> {
-                            PreparedStatement ps = connection.prepareStatement(PolicyQueries.FIND_SQL);
-                            ps.setObject(1, meterId);
-                            ps.setObject(2,anomalyType );
-                            ps.setObject(3, severity);
-                            return ps;
-                        },
-                        policyRowMapper
-                ).stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(
-                        "Find did not return  policy"
-                ));
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            PolicyQueries.FIND_SQL
+                    );
+                    ps.setObject(1, meterId);
+                    ps.setObject(2, anomalyType);
+                    ps.setObject(3, severity);
+                    return ps;
+                },
+                policyRowMapper
+        ).stream().findFirst();
     }
 }

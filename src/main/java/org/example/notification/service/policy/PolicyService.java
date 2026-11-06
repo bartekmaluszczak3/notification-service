@@ -11,6 +11,7 @@ import org.example.notification.exception.PolicyNotFoundException;
 import org.example.notification.repository.policy.PolicyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,14 +36,12 @@ public class PolicyService {
     }
 
     public Policy findPolicy(String meterId, String anomalyType, String severity) {
-        try {
-            return policyRepository.findPolicy(meterId, anomalyType, severity);
-        }catch (Exception e){
-            log.info("Policy not found. Return default policy.");
-            var policy = new Policy();
-            policy.setEnabled(true);
-            policy.setMeterId(meterId);
-            return policy;
-        }
+        return policyRepository.findPolicy(meterId, anomalyType, severity).orElse(Policy.builder()
+                        .enabled(true)
+                        .meterId(meterId)
+                        .channelTypes(Set.of())
+                        .smsRecipients(Set.of())
+                        .emailRecipients(Set.of())
+                .build());
     }
 }

@@ -13,5 +13,5 @@ public interface PolicyRepository {
 
     Policy update(String policyId, UpdatePolicyRequest updatePolicyRequest) throws DatabaseException;
 
-    Policy findPolicy(String meterId, String anomalyType, String severity);
+    Optional<Policy> findPolicy(String meterId, String anomalyType, String severity);
 }

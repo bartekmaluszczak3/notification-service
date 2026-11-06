@@ -1,15 +1,15 @@
 package org.example.notification.domain.policy;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.notification.domain.policy.ChannelType;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Policy {
     private Long id;
     private String policyId;

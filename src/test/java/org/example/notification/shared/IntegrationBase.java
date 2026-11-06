@@ -1,5 +1,6 @@
 package org.example.notification.shared;
 
+import org.example.device.events.AnomalyDetectedEvent;
 import org.example.notification.Application;
 import org.example.notification.domain.policy.ChannelType;
 import org.example.notification.domain.policy.dto.PolicyRequest;
@@ -7,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -31,9 +34,19 @@ public abstract class IntegrationBase {
                     .withUsername("test")
                     .withPassword("test")
                     .withInitScript("init.sql");
+    protected static final KafkaContainer kafka =
+            new KafkaContainer(
+                    DockerImageName.parse("confluentinc/cp-kafka:7.6.0")
+            );
     static {
+        kafka.start();
         postgres.start();
     }
+
+
+    @Autowired
+    protected KafkaTemplate<String, AnomalyDetectedEvent> kafkaTemplate;
+
 
     @BeforeEach
     void beforeEach() {
@@ -58,6 +71,11 @@ public abstract class IntegrationBase {
                 "spring.datasource.driver-class-name",
                 () -> "org.postgresql.Driver"
         );
+        registry.add(
+                "spring.kafka.bootstrap-servers",
+                kafka::getBootstrapServers
+        );
+
     }
 
     @Autowired
